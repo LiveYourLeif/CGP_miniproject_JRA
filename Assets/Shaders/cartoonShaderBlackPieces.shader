@@ -1,7 +1,7 @@
-Shader "Unlit/cartoonShader"
+Shader "Unlit/cartoonShaderWhitePieces"
 {
     Properties
-    {
+    {   
         _MainTex ("Texture", 2D) = "" {} //Controls the texture applied to the object. 
         _lightIntensity("Degree of shadow intensity", Range(0,1)) = 0.5 //Defines the ambient light reflecting on the toonshading, with a defualt value of 0.5. 
         _objectIntensity("Strength", Range(0,1)) = 0.5 //Defines the strength of color/texture which is applied to the object/toon shader, and it has a default value of 0.5.
