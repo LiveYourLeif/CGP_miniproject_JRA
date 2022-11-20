@@ -27,7 +27,7 @@ Shader "Unlit/cartoonShaderWhitePieces"
             //Uniforms sets the controllable settings for the user in Unity, makinng it possible for the user to make changes.
             uniform sampler2D _MainTex;
             uniform float4 _MainTex_ST;
-            uniform float _lighIntensity;
+            uniform float _lightIntensity;
             uniform float _objectIntensity;
             uniform float _dotDetail;
 
@@ -67,7 +67,7 @@ Shader "Unlit/cartoonShaderWhitePieces"
             fixed4 frag (v2f i) : SV_Target //Fragment shader function, takes the data from the vertex shader and uses it to perform the shading.
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
-                col *= toonEffect(i.worldNormal, _WorldSpaceLightPos0.xyz)*_objectIntensity+_lighIntensity;
+                col *= toonEffect(i.worldNormal, _WorldSpaceLightPos0.xyz)*_objectIntensity+_lightIntensity;
                 return col;
             }
             ENDCG

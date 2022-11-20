@@ -31,7 +31,7 @@ Material:
     - _Strength: 0.623
     - _colorIntensity: 0.427
     - _dotDetail: 0.208
-    - _lightIntensity: 0.416
+    - _lightIntensity: 0.316
     - _objectIntensity: 0.3
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
