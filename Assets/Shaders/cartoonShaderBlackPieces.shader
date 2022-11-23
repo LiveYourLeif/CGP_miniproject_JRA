@@ -2,10 +2,10 @@ Shader "Unlit/cartoonShaderWhitePieces"
 {
     Properties
     {   
-        _MainTex ("Texture", 2D) = "" {} //Controls the texture applied to the object. 
-        _lightIntensity("Degree of shadow intensity", Range(0,1)) = 0.5 //Defines the ambient light reflecting on the toonshading, with a defualt value of 0.5. 
+        _shadowIntensity("Degree of shadow intensity", Range(0,1)) = 0.5 //Defines the ambient light reflecting on the toonshading, with a defualt value of 0.5. 
         _objectIntensity("Strength", Range(0,1)) = 0.5 //Defines the strength of color/texture which is applied to the object/toon shader, and it has a default value of 0.5.
         _dotDetail("Detail of the Toon Shading", Range(0,1)) = 0.5 //Amount of detail applied to the toon shader, the default value is set to 0.5.
+        _MainTex ("Texture", 2D) = "" {} //Controls the texture applied to the object. 
     }
     SubShader
     {
@@ -24,10 +24,10 @@ Shader "Unlit/cartoonShaderWhitePieces"
             // #include makes it possible for the shader compiler to takes additional built in functions from Unity.
             #include "UnityCG.cginc"
 
-            //Uniforms sets the controllable settings for the user in Unity, makinng it possible for the user to make changes.
+            //Uniforms sets the controllable settings for the user in Unity, makinng it possible for the user to make changes. However, in Unity is not need to use, but good practice as other platforms uses this syntax.
             uniform sampler2D _MainTex;
             uniform float4 _MainTex_ST;
-            uniform float _lightIntensity;
+            uniform float _shadowIntensity;
             uniform float _objectIntensity;
             uniform float _dotDetail;
 
@@ -47,11 +47,11 @@ Shader "Unlit/cartoonShaderWhitePieces"
             };
             
             
-            float toonEffect(float3 normal, float3 lightDirection) //Toon shader calculation of dot products
+            float toonEffect(float3 normal, float3 directionOfLight) //Toon shader calculation of dot products
             {
                 // The dot product of the normal and light direction are returned and applied later on to the fragment shader
-                float NdotL = max(0.0, dot(normalize(normal), normalize(lightDirection))); 
-                return floor (NdotL/_dotDetail); 
+                float dotProductNL = max(0.0, dot(normalize(normal), normalize(directionOfLight))); 
+                return floor (dotProductNL/_dotDetail); 
             }
 
             v2f vert (appdata v) //Vertex shader function, which takes an appdata structure and returns a struct containing the position of each vertex. 
@@ -67,7 +67,7 @@ Shader "Unlit/cartoonShaderWhitePieces"
             fixed4 frag (v2f i) : SV_Target //Fragment shader function, takes the data from the vertex shader and uses it to perform the shading.
             {
                 fixed4 col = tex2D(_MainTex, i.uv);
-                col *= toonEffect(i.worldNormal, _WorldSpaceLightPos0.xyz)*_objectIntensity+_lightIntensity;
+                col *= toonEffect(i.worldNormal, _WorldSpaceLightPos0.xyz)*_objectIntensity+_shadowIntensity;
                 return col;
             }
             ENDCG
