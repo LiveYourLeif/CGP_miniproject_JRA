@@ -74,12 +74,15 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _dotDetail: 0.401
+    - _dotDetail: 0.733
     - _lightIntensity: 0.456
-    - _objectIntensity: 0.5
-    - _shadowIntensity: 0.278
+    - _objectIntensity: 0.505
+    - _outlineThickness: 0.196
+    - _shadowIntensity: 0.23
+    - _sizeOfOutline: 1.021
     m_Colors:
     - _Color: {r: 0.6226415, g: 0.14978638, b: 0.14978638, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _color: {r: 0.4716981, g: 0.46502313, b: 0.46502313, a: 0}
+    - _color: {r: 0.6698113, g: 0.66665184, b: 0.66665184, a: 0}
+    - _colorOfOutline: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 1}
   m_BuildTextureStacks: []

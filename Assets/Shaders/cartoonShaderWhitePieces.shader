@@ -2,15 +2,20 @@ Shader "Unlit/cartoonShaderWhitePieces"
 {
     Properties
     {   
-        _shadowIntensity("Degree of shadow intensity", Range(0,1)) = 0.5 //Defines the ambient light reflecting on the toonshading, with a defualt value of 0.5. 
-        _objectIntensity("Strength", Range(0,1)) = 0.5 //Defines the strength of color/texture which is applied to the object/toon shader, and it has a default value of 0.5.
-        _color("Set preffered color nuance", Color) = (1, 1, 1, 1) //Allows the user to chose a color nuance to the shader (red, green, blue, alpha)
-        _dotDetail("Detail of the Toon Shading", Range(0,1)) = 0.5 //Amount of detail applied to the toon shader, the default value is set to 0.5.
+        _shadowIntensity ("Degree of shadow intensity", Range(0,1)) = 0.5 //Defines the ambient light reflecting on the toonshading, with a defualt value of 0.5. 
+        _objectIntensity ("Strength of toon shading", Range(0,1)) = 0.5 //Defines the strength of color/texture of the object/toon shader, and it has a default value of 0.5.
+        _color ("Set preffered color nuance", Color) = (1, 1, 1, 1) //Allows the user to chose a color nuance to the shader (red, green, blue, alpha)
+        _dotDetail ("Detail of the Toon Shading", Range(0,1)) = 0.5 //Amount of detail applied to the toon shader, the default value is set to 0.5.
         _MainTex ("Choose Texture", 2D) = "" {} //Controls the texture applied to the object.
+        _colorOfOutline ("Outline Color", Color)=(1, 1, 1, 1)
+        _sizeOfOutline ("OutlineSize", Range(1,2))= 1.5
+        //_outlineThickness ("Sets the thickness of the outline", Range(0,1)) = 0.5
+        
         
     }
     SubShader
     {
+        name "Toon shader"
         Tags
         {
             
@@ -33,6 +38,7 @@ Shader "Unlit/cartoonShaderWhitePieces"
             uniform float _objectIntensity;
             uniform float _dotDetail;
             uniform float4 _color;
+             
 
             struct appdata_input //The structure the handles input data
             {
@@ -42,7 +48,7 @@ Shader "Unlit/cartoonShaderWhitePieces"
                 
             };
 
-            struct v2f //The structure handles the output data
+            struct vertex_output //The structure handles the output data
             {
                 float2 uv : TEXCOORD0;
                 float4 vertex : SV_POSITION;
@@ -56,19 +62,20 @@ Shader "Unlit/cartoonShaderWhitePieces"
                 float dotProductNL = max(0.0, dot(normalize(normal), normalize(directionOfLight))); 
                 return floor (dotProductNL/_dotDetail); 
             }
-
+            
+            
             //Vertex shader function, which takes an input structure and returns a new struct containing the position of each vertex.
             //In other words, the whole transformation of vertexes happens here. 
-            v2f vert (appdata_input input) 
+            vertex_output vert (appdata_input input) 
             {
-                v2f output; //Initialize the returning v2f struct called "output".
+                vertex_output output; //Initialize the returning v2f struct called "output".
                 output.vertex = UnityObjectToClipPos(input.vertex); 
                 output.uv = TRANSFORM_TEX(input.uv, _MainTex);
                 output.worldNormal = UnityObjectToWorldNormal(input.normal); //Takes the normals from the input data, and transform the normals from object space to world space.
                 return output;
             }
 
-            fixed4 frag (v2f v2f_input) : SV_Target //Fragment shader function, takes the data from the vertex shader function's new structure and uses it to perform the toon shading.
+            fixed4 frag (vertex_output v2f_input) : SV_Target //Fragment shader function, takes the data from the vertex shader function's new structure and uses it to perform the toon shading.
             {
                 fixed4 colouring = tex2D(_MainTex, v2f_input.uv);
                 colouring *= toonEffect(v2f_input.worldNormal, _WorldSpaceLightPos0.xyz)*(_objectIntensity*_color)+_shadowIntensity;
@@ -76,5 +83,52 @@ Shader "Unlit/cartoonShaderWhitePieces"
             }
             ENDCG
         }
+        
+        //New shader containing the outline shader
+        Pass
+        {
+            name "Outline"
+            
+            Tags
+            {
+                
+            }
+            
+            Cull Front
+            
+            CGPROGRAM
+            #pragma vertex vert
+            #pragma fragment frag
+            
+            
+            uniform fixed4 _colorOfOutline;
+            uniform float _sizeOfOutline;
+            // uniform float _outlineThickness;
+
+            
+            struct appdata_input
+            {
+                float4 vertex : POSITION;
+            };
+            
+            struct vertex_output
+            {
+                float4 vertex : SV_POSITION;
+            };
+            
+            vertex_output vert (appdata_input input)
+            {
+                vertex_output output;
+                output.vertex = UnityObjectToClipPos(input.vertex * _sizeOfOutline);
+                return output;
+            }
+            
+            fixed4 frag (vertex_output vertex_input) : SV_Target
+            {
+                return _colorOfOutline;
+            }
+            ENDCG
+        }
     }
+    
 }
