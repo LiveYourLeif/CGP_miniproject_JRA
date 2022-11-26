@@ -5,13 +5,8 @@ Shader "Unlit/cartoonShaderBlackPieces"
         _shadowIntensity ("Degree of shadow intensity", Range(0,1)) = 0.5 //Defines the ambient light reflecting on the toonshading, with a defualt value of 0.5. 
         _objectIntensity ("Strength of toon shading", Range(0,1)) = 0.5 //Defines the strength of color/texture of the object/toon shader, and it has a default value of 0.5.
         _color ("Set preffered color nuance", Color) = (1, 1, 1, 1) //Allows the user to chose a color nuance to the shader (red, green, blue, alpha)
-        _dotDetail ("Detail of the Toon Shading", Range(0,1)) = 0.5 //Amount of detail applied to the toon shader, the default value is set to 0.5.
-        _MainTex ("Choose Texture", 2D) = "" {} //Controls the texture applied to the object.
-        _colorOfOutline ("Outline Color", Color)=(1, 1, 1, 1)
-        _sizeOfOutline ("OutlineSize", Range(1,2))= 1.5
-        
-        
-        
+        _dotDetail ("Detail of the Toon Shading", Range(0,1)) = 0.5 //Amount of detail applied to the toon shader, the default value is set to 0.5
+        _MainTex ("Choose Texture", 2D) = "" {} //Controls the texture applied to the object
     }
     SubShader
     {
@@ -32,12 +27,13 @@ Shader "Unlit/cartoonShaderBlackPieces"
 
             //Uniforms sets the controllable settings for the user in Unity, making it possible for the user to make changes.
             //However, in Unity is not required to use uniforms but used for good practice, as other platforms use this syntax.
-            uniform sampler2D _MainTex;
-            uniform float4 _MainTex_ST;
             uniform float _shadowIntensity;
             uniform float _objectIntensity;
             uniform float _dotDetail;
             uniform float4 _color;
+            uniform sampler2D _MainTex;
+            uniform float4 _MainTex_ST;
+            
              
 
             struct appdata_input //The structure the handles input data
@@ -56,11 +52,15 @@ Shader "Unlit/cartoonShaderBlackPieces"
             };
             
             
-            float toonEffect(float3 normal, float3 directionOfLight) //Toon shader function
+            float toonEffect(float3 normal, float3 directionOfLight) //Toon shader function which takes the normal and light direction as arguments.
             {
-                // The dot product of the normal and light direction are returned and applied later on to the fragment shader
-                float dotProductNL = max(0.0, dot(normalize(normal), normalize(directionOfLight))); 
-                return floor (dotProductNL/_dotDetail); 
+                // Calculates the dot product by normalizing the normal and light direction vectors.
+                // By using the "max" function, then if the dot product < 0,
+                // then the calculated dot product would be set to 0.
+                float dotProductNL = max(0, dot(normalize(normal), normalize(directionOfLight)));
+                // By dividing the dot product by a number between "0-1", the less detail will occur in the toon shader,
+                // and the floor function rounds down to the closest integer. 
+                return floor(dotProductNL/_dotDetail); 
             }
             
             
@@ -69,8 +69,8 @@ Shader "Unlit/cartoonShaderBlackPieces"
             vertex_output vert (appdata_input input) 
             {
                 vertex_output output; //Initialize the returning v2f struct called "output".
-                output.vertex = UnityObjectToClipPos(input.vertex); 
                 output.uv = TRANSFORM_TEX(input.uv, _MainTex);
+                output.vertex = UnityObjectToClipPos(input.vertex); 
                 output.worldNormal = UnityObjectToWorldNormal(input.normal); //Takes the normals from the input data, and transform the normals from object space to world space.
                 return output;
             }
@@ -84,25 +84,19 @@ Shader "Unlit/cartoonShaderBlackPieces"
             ENDCG
         }
         
-        //New shader containing the outline shader
-        Pass
+        //New shader, it follows the same structure as the first shader.
+        /*Pass
         {
-            name "Outline"
+            name ""
             
             Tags
             {
                 
             }
-            
-            Cull Front
-            
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
             
-            
-            uniform fixed4 _colorOfOutline;
-            uniform float _sizeOfOutline;
             
 
             
@@ -119,16 +113,15 @@ Shader "Unlit/cartoonShaderBlackPieces"
             vertex_output vert (appdata_input input)
             {
                 vertex_output output;
-                output.vertex = UnityObjectToClipPos(input.vertex * _sizeOfOutline);
                 return output;
             }
             
             fixed4 frag (vertex_output vertex_input) : SV_Target
             {
-                return _colorOfOutline;
+                return 
             }
             ENDCG
-        }
+        }*/
     }
     
 }
