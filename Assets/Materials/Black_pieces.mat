@@ -74,12 +74,12 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _dotDetail: 0.3
+    - _dotDetail: 0.371
     - _glossinessEffext: 50
     - _lightIntensity: 0.456
-    - _objectIntensity: 0.107
+    - _objectIntensity: 0.26
     - _outlineThickness: 0.196
-    - _shadowIntensity: 0.387
+    - _shadowIntensity: 0.26
     - _sizeOfOutline: 1.011
     - _thicknessOfOutline: 0.5
     m_Colors:

@@ -1,6 +1,6 @@
 Shader "Unlit/cartoonShaderWhitePieces"
 {
-    Properties
+     Properties
     {   
         _shadowIntensity ("Degree of shadow intensity", Range(0,1)) = 0.5 //Defines the ambient light reflecting on the toonshading, with a defualt value of 0.5. 
         _objectIntensity ("Strength of toon shading", Range(0,1)) = 0.5 //Defines the strength of color/texture of the object/toon shader, and it has a default value of 0.5.
@@ -52,12 +52,12 @@ Shader "Unlit/cartoonShaderWhitePieces"
             };
             
             
-            float toonEffect(float3 normal, float3 directionOfLight) //Toon shader function which takes the normal and light direction as arguments.
+            float toonEffect(float3 directionOfNormal, float3 directionOfLight) //Toon shader function which takes the normal and light direction as arguments.
             {
                 // Calculates the dot product by normalizing the normal and light direction vectors.
                 // By using the "max" function, then if the dot product < 0,
                 // then the calculated dot product would be set to 0.
-                float dotProductNL = max(0, dot(normalize(normal), normalize(directionOfLight)));
+                float dotProductNL = max(0, dot(normalize(directionOfNormal), normalize(directionOfLight)));
                 // By dividing the dot product by a number between "0-1", the less detail will occur in the toon shader,
                 // and the floor function rounds down to the closest integer. 
                 return floor(dotProductNL/_dotDetail); 
