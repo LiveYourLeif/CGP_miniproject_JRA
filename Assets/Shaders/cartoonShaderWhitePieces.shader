@@ -2,7 +2,7 @@ Shader "Unlit/cartoonShaderWhitePieces"
 {
      Properties
     {   
-        _shadowIntensity ("Degree of shadow intensity", Range(0,1)) = 0.5 //Defines the ambient light reflecting on the toonshading, with a defualt value of 0.5. 
+        _ambientLight ("Degree of shadow intensity", Range(0,1)) = 0.5 //Defines the ambient light reflecting on the toonshading, with a defualt value of 0.5. 
         _objectIntensity ("Strength of toon shading", Range(0,1)) = 0.5 //Defines the strength of color/texture of the object/toon shader, and it has a default value of 0.5.
         _color ("Set preffered color nuance", Color) = (1, 1, 1, 1) //Allows the user to chose a color nuance to the shader (red, green, blue, alpha)
         _dotDetail ("Detail of the Toon Shading", Range(0,1)) = 0.5 //Amount of detail applied to the toon shader, the default value is set to 0.5
@@ -24,10 +24,12 @@ Shader "Unlit/cartoonShaderWhitePieces"
             #pragma fragment frag
             // #include makes it possible for the shader compiler to takes additional built in functions from Unity.
             #include "UnityCG.cginc"
+            #include "Lighting.cginc"
+            
 
             //Uniforms sets the controllable settings for the user in Unity, making it possible for the user to make changes.
             //However, in Unity is not required to use uniforms but used for good practice, as other platforms use this syntax.
-            uniform float _shadowIntensity;
+            uniform float _ambientLight; 
             uniform float _objectIntensity;
             uniform float _dotDetail;
             uniform float4 _color;
@@ -59,9 +61,11 @@ Shader "Unlit/cartoonShaderWhitePieces"
                 // then the calculated dot product would be set to 0.
                 float dotProductNL = max(0, dot(normalize(directionOfNormal), normalize(directionOfLight)));
                 // By dividing the dot product by a number between "0-1", the less detail will occur in the toon shader,
-                // and the floor function rounds down to the closest integer. 
-                return floor(dotProductNL/_dotDetail); 
+                // and the floor function rounds down to the closest integer. In addition, the smoothstep function helps with
+                //a more smoothly blending between the light and shadows.
+                return smoothstep(0, 0.01, floor(dotProductNL/_dotDetail)); 
             }
+            
             
             
             //Vertex shader function, which takes an input structure and returns a new struct containing the position of each vertex.
@@ -78,7 +82,7 @@ Shader "Unlit/cartoonShaderWhitePieces"
             fixed4 frag (vertex_output v2f_input) : SV_Target //Fragment shader function, takes the data from the vertex shader function's new structure and uses it to perform the toon shading.
             {
                 fixed4 colouring = tex2D(_MainTex, v2f_input.uv);
-                colouring *= toonEffect(v2f_input.worldNormal, _WorldSpaceLightPos0.xyz)*(_objectIntensity*_color)+_shadowIntensity;
+                colouring *= toonEffect(v2f_input.worldNormal, _WorldSpaceLightPos0.xyz)*(_objectIntensity*_color)+(_ambientLight*_LightColor0);
                 return colouring;
             }
             ENDCG
