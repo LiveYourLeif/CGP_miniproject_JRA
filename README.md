@@ -28,6 +28,7 @@ All available properties can be manipulated throughout the unity interface, when
 | _ambientLight | Controls the amount of ambient light reflecting on the Toon shader. | 
 | _objectIntensity| Controls the strength of the Toon effect. | 
 | _color | Sets a color     nuance to the Toon shader.| 
+| _lightColor0 | Controls the color which is reflecting on the 3d objetcs from the directional light in Unity.| 
 | _dotDetail | Controls the detail of the Toon Shader.| 
 |  _MainTex | Sets the texture which the Toon effect is applied to.| 
 
@@ -37,4 +38,4 @@ All available properties can be manipulated throughout the unity interface, when
 - "Chess Kit" (https://skfb.ly/6WMyY) by Luke Brown is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 -  "3D Sketchbook - Black Rook" (https://skfb.ly/6Y9AA) by e.shifflett is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 ### Textures used:
-- "Marble texturre" https://polyhaven.com/a/marble_01 by Rob Tuytel is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+- "Marble texture" https://polyhaven.com/a/marble_01 by Rob Tuytel is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
