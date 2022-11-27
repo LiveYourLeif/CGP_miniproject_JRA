@@ -1,6 +1,6 @@
 # CGP miniproject | Jonas Attrup
 ## _MED 5 - autumn semester 2022._
-This mini-poject was made in order to qualify for the oral esxam in the Computer Graphics Programming coruse at Aalborg University. The foundation of the project is to make a shader, showcase its functionalies in Unity, and understand the basic of HLSL (High-level shader language). In order to do so, a cartoon shader (_Toon shader_) was programmed based on the _phong reflection model_. 
+This mini-poject was made in order to qualify for the oral esxam in the Computer Graphics Programming coruse at Aalborg University. The foundation of the project is to make a shader, showcase its functionalies in Unity, and understand the basic of HLSL (High-level shader language). In order to do so, a cartoon shader (_Toon shader_) was programmed.
 
 ## Instalation instructions
 - Clone the git repo or download it manually.
