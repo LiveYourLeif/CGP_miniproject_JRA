@@ -17,18 +17,19 @@ The Toon effect is defined with the following function and later applied to the 
 ```c
 float toonEffect(float3 directionOfNormal, float3 directionOfLight) 
 {
-    float dotProductNL = max(0,dot(normalize(directionOfNormal),normalize(directionOfLight)));
-    return smoothstep(0, 0.01, floor(dotProductNL/_dotDetail)); 
+    float diffuseEffect = max(0, dot(normalize(directionOfNormal), normalize(directionOfLight)));
+    diffuseEffect = smoothstep(0, 0.01, floor(diffuseEffect/_dotDetail)); 
+    return diffuseEffect;
 }
 ```
 ## Properties
 All available properties can be manipulated throughout the unity interface, when interacting with the shader materials. The properties can also manually be set within the shader code.
 | List of properties | functionality |
 | ------ | ------ |
+| _diffuseLight| Controls the strength of the diffuse effect. | 
+| _color | Multiplies a color nuance to the diffuse effect.| 
 | _ambientLight | Controls the amount of ambient light reflecting on the Toon shader. | 
-| _objectIntensity| Controls the strength of the Toon effect. | 
-| _color | Sets a color     nuance to the Toon shader.| 
-| _lightColor0 | Controls the color which is reflecting on the 3d objetcs from the directional light in Unity.| 
+| _lightColor0 | Controls the color which is reflecting on the 3d objetcs from the directional light inside of Unity.| 
 | _dotDetail | Controls the detail of the Toon Shader.| 
 |  _MainTex | Sets the texture which the Toon effect is applied to.| 
 
