@@ -9,6 +9,7 @@ Shader "Unlit/cartoonShaderBlackPieces"
         _outlineColor("Outline color", Color) = (1, 1, 1, 1)
         _outlineThickness("Outline thickness", Range(0,1)) = 0.5
         _MainTex ("Choose Texture", 2D) = "" {} //Controls the texture applied to the object
+        
     }
     SubShader
     {
@@ -55,20 +56,23 @@ Shader "Unlit/cartoonShaderBlackPieces"
                 float2 uv : TEXCOORD0;
                 float4 vertexPos : SV_POSITION;
                 float3 worldNormal : NORMAL; //Defines the normals in the vertex shader
-                float3 viewDirection : TEXCOORD1;
+                float3 viewDirection : TEXCOORD1; //Defines the view direction
             };
             
             
-            float toonEffect(float3 directionOfNormal, float3 directionOfLight, float3 directionOfView) //Toon shader function which takes the normal and light direction as arguments, and makes the diffuse reflection.
+            float toonEffect(float3 directionOfNormal, float3 directionOfLight, float3 directionOfView) //Toon shader function which takes the normal,light and view direction as arguments, and makes the toon effect
             {
                 // Calculates the dot product by normalizing the normal and light direction vectors.
                 // By using the "max" function, then if the dot product < 0,
                 // then the calculated dot product would be set to 0.
                 float dotProductNL = max(0, dot(normalize(directionOfNormal), normalize(directionOfLight)));
-                // By dividing the dot product by a number between "0-1", the less detail will occur in the toon shader,
+                // By dividing the dot product by a number between "0-1", the less detail will occur in the diffuse effect,
                 // and the floor function rounds down to the closest integer. In addition, the smoothstep function helps with
                 //a more smoothly blending between the light and shadows.
                 dotProductNL = smoothstep(0, 0.01, floor(dotProductNL/_dotDetail));
+
+                //specular effect
+                 
                 //The outline
                 // float outlineNormal = (normalize(directionOfNormal), normalize(directionOfView));
                 // float outlineDotProduct =  1 - dot(directionOfNormal, directionOfView);
@@ -76,7 +80,6 @@ Shader "Unlit/cartoonShaderBlackPieces"
                 //Return the´toon effect
                 return dotProductNL;  // + outlineNormal + outlineDotProduct; 
             }
-            
             
             
             //Vertex shader function, which takes an input structure and returns a new struct containing the position of each vertex.
@@ -93,8 +96,10 @@ Shader "Unlit/cartoonShaderBlackPieces"
 
             fixed4 frag (vertex_output v2f_input) : SV_Target //Fragment shader function, takes the data from the vertex shader function's new structure and uses it to perform the toon shading.
             {
+
+                
                 fixed4 colouring = tex2D(_MainTex, v2f_input.uv);
-                colouring *= toonEffect(v2f_input.worldNormal, _WorldSpaceLightPos0.xyz,v2f_input.viewDirection)*( _diffuseLight*_color)+(_ambientLight*_LightColor0);//*(_outlineColor + _outlineThickness);
+                colouring *= toonEffect(v2f_input.worldNormal, _WorldSpaceLightPos0.xyz, v2f_input.viewDirection)*( _diffuseLight*_color)+(_ambientLight*_LightColor0);//*(_outlineColor + _outlineThickness);
                 return colouring;
             }
             ENDCG

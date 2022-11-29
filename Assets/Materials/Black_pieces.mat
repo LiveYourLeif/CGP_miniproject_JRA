@@ -63,7 +63,7 @@ Material:
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
     - _GlossMapScale: 1
-    - _Glossiness: 10
+    - _Glossiness: 30
     - _GlossyReflections: 1
     - _Metallic: 0
     - _Mode: 0
@@ -74,20 +74,21 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _ambientLight: 0.439
-    - _diffuseLight: 0.498
-    - _dotDetail: 0.371
+    - _ambientLight: 0.371
+    - _diffuseLight: 1
+    - _dotDetail: 0.375
     - _glossinessEffext: 50
     - _lightIntensity: 0.456
     - _objectIntensity: 0.78
-    - _outlineThickness: 0.505
+    - _outlineThickness: 0.341
     - _shadowIntensity: 0
     - _sizeOfOutline: 1.011
     - _thicknessOfOutline: 0.5
     m_Colors:
     - _Color: {r: 0.6226415, g: 0.14978638, b: 0.14978638, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _color: {r: 1, g: 0.9764151, b: 0.9764151, a: 0}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
+    - _color: {r: 1, g: 1, b: 1, a: 0}
     - _colorOfOutline: {r: 0, g: 0, b: 0, a: 1}
-    - _outlineColor: {r: 0.9150943, g: 0.634523, b: 0.634523, a: 1}
+    - _outlineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
