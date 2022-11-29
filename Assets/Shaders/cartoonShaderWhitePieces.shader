@@ -49,7 +49,7 @@ Shader "Unlit/cartoonShaderWhitePieces"
             struct vertex_output //The structure handles the output data
             {
                 float2 uv : TEXCOORD0;
-                float4 vertex : SV_POSITION;
+                float4 vertexPos : SV_POSITION;
                 float3 worldNormal : NORMAL; //Defines the normals in the vertex shader
             };
             
@@ -74,7 +74,7 @@ Shader "Unlit/cartoonShaderWhitePieces"
             {
                 vertex_output output; //Initialize the returning v2f struct called "output".
                 output.uv = TRANSFORM_TEX(input.uv, _MainTex);
-                output.vertex = UnityObjectToClipPos(input.vertex); 
+                output.vertexPos = UnityObjectToClipPos(input.vertex); 
                 output.worldNormal = UnityObjectToWorldNormal(input.normal); //Takes the normals from the input data, and transform the normals from object space to world space.
                 return output;
             }
