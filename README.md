@@ -40,3 +40,5 @@ All available properties can be manipulated throughout the unity interface, when
 -  "3D Sketchbook - Black Rook" (https://skfb.ly/6Y9AA) by e.shifflett is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 ### Textures used:
 - "Marble texture" https://polyhaven.com/a/marble_01 by Rob Tuytel is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
+### Shaders:
+- Wiki books - "Cg Programming/Unity" by (https://en.wikibooks.org/wiki/Cg_Programming/Unity)
