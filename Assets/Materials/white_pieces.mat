@@ -29,11 +29,13 @@ Material:
     - _Brightness: 0.527
     - _Detail: 0.471
     - _Strength: 0.623
-    - _ambientLight: 0.2
+    - _ambientLight: 0.207
     - _colorIntensity: 0.427
-    - _dotDetail: 0.5
+    - _diffuseAngle: 0.777
+    - _diffuseLight: 0.5
+    - _dotDetail: 0.757
     - _lightIntensity: 0.316
-    - _objectIntensity: 0.5
+    - _objectIntensity: 0.286
     - _outlineThickness: 0.5
     - _shadowIntensity: 0.144
     - _sizeOfOutline: 1.01

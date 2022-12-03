@@ -18,7 +18,7 @@ The Toon effect is defined with the following function and later applied to the 
 float toonEffect(float3 directionOfNormal, float3 directionOfLight) 
 {
     float diffuseEffect = max(0, dot(normalize(directionOfNormal), normalize(directionOfLight)));
-    diffuseEffect = smoothstep(0, 0.01, floor(diffuseEffect/_diffuseAngle)); 
+    diffuseEffect = smoothstep(0, 0.1, floor(diffuseEffect/_diffuseAngle)); 
     return diffuseEffect;
 }
 ```
@@ -42,3 +42,4 @@ All available properties can be manipulated throughout the unity interface, when
 - "Marble texture" https://polyhaven.com/a/marble_01 by Rob Tuytel is licensed under Creative Commons Attribution (http://creativecommons.org/licenses/by/4.0/).
 ### Shaders:
 - Wiki books - "Cg Programming/Unity" by (https://en.wikibooks.org/wiki/Cg_Programming/Unity)
+- Youtube - "Toon Shader From Scratch - Explained!" by (https://www.youtube.com/watch?v=owwnUcmO3Lw)

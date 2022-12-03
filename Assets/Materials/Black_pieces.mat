@@ -74,9 +74,10 @@ Material:
     - _SrcBlend: 1
     - _UVSec: 0
     - _ZWrite: 1
-    - _ambientLight: 0.308
-    - _diffuseLight: 0.713
-    - _dotDetail: 0.393
+    - _ambientLight: 0.119
+    - _diffuseAngle: 0.532
+    - _diffuseLight: 0.137
+    - _dotDetail: 0.613
     - _glossinessEffext: 50
     - _lightIntensity: 0.456
     - _objectIntensity: 0.78
@@ -88,7 +89,7 @@ Material:
     - _Color: {r: 0.6226415, g: 0.14978638, b: 0.14978638, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
-    - _color: {r: 1, g: 0.740566, b: 0.740566, a: 0}
+    - _color: {r: 1, g: 1, b: 1, a: 0}
     - _colorOfOutline: {r: 0, g: 0, b: 0, a: 1}
     - _outlineColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
